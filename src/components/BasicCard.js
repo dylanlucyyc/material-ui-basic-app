@@ -7,10 +7,14 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Chip } from "@mui/material";
 import Divider from "@mui/material/Divider";
+import { Link } from "react-router-dom";
 
-export default function BasicCard({ post }) {
+export default function BasicCard({ post, isLogin }) {
   return (
-    <Card sx={{ minWidth: 275, backgroundColor: "#353535", color: "#fff" }}>
+    <Card
+      sx={{ minWidth: 275, backgroundColor: "#353535", color: "#fff" }}
+      key={post.id}
+    >
       <CardContent>
         <Typography variant="h2" sx={{ fontSize: 20, mb: 1 }}>
           {post.title}
@@ -33,12 +37,15 @@ export default function BasicCard({ post }) {
           width: "100%",
         }}
       >
-        <Button
-          size="small"
-          sx={{ backgroundColor: "#ffa727", color: "black", mr: 1, mb: 1 }}
-        >
-          Learn More
-        </Button>
+        <Link to={isLogin ? `/jobs/${post.id}` : `/login`}>
+          {" "}
+          <Button
+            size="small"
+            sx={{ backgroundColor: "#ffa727", color: "black", mr: 1, mb: 1 }}
+          >
+            Learn More
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );

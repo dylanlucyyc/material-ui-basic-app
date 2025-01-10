@@ -8,6 +8,8 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { Button } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -49,7 +51,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar({
+  username,
+  setUsername,
+  isLogin,
+  setIsLogin,
+}) {
+  const navigate = useNavigate();
+
+  function handleLogin() {
+    navigate("/login");
+  }
+
+  function handleLogout() {
+    setUsername("");
+    setIsLogin(false);
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: "#272727" }}>
@@ -72,10 +90,17 @@ export default function PrimarySearchAppBar() {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Button color="inherit">
-            <LoginIcon sx={{ mr: 2 }} />
-            Login
-          </Button>
+          {!isLogin ? (
+            <Button color="inherit" onClick={handleLogin}>
+              <LoginIcon sx={{ mr: 2 }} />
+              Login
+            </Button>
+          ) : (
+            <Button color="inherit" onClick={handleLogout}>
+              <LogoutIcon sx={{ mr: 2 }} />
+              Logged in as {username}, Logout?
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
